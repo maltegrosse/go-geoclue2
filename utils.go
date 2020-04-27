@@ -1,23 +1,25 @@
-package go_geoclue2
+package geoclue2
+
+import (
+	"errors"
+	"fmt"
+	"github.com/godbus/dbus/v5"
+	"time"
+)
 
 /*
  Copied and extended from https://github.com/Wifx/gonetworkmanager/blob/master/utils.go
  on April the 1st 2020
-
  The MIT License (MIT)
-
- Copyright (c) 2019 Wifx Sàrl
-
+ Copyright (c) 2019 Wifx Sàrl & Copyright (c) 2016 Bellerophon Mobile
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
  in the Software without restriction, including without limitation the rights
  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  copies of the Software, and to permit persons to whom the Software is
  furnished to do so, subject to the following conditions:
-
  The above copyright notice and this permission notice shall be included in all
  copies or substantial portions of the Software.
-
  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -25,41 +27,7 @@ package go_geoclue2
  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  SOFTWARE.
-
- ------------------------------------------------------------------------------
-
- The MIT License (MIT)
-
- Copyright (c) 2016 Bellerophon Mobile
-
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
-
- The above copyright notice and this permission notice shall be included in all
- copies or substantial portions of the Software.
-
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- SOFTWARE.
-
 */
-
-import (
-	"encoding/binary"
-	"fmt"
-	"net"
-	"time"
-
-	"github.com/godbus/dbus/v5"
-)
 
 const (
 	dbusMethodAddMatch = "org.freedesktop.DBus.AddMatch"
@@ -97,7 +65,7 @@ func (d *dbusBase) callWithReturn2(ret1 interface{}, ret2 interface{}, method st
 
 func (d *dbusBase) subscribe(iface, member string) {
 	rule := fmt.Sprintf("type='signal',interface='%s',path='%s',member='%s'",
-		iface, d.obj.Path(), GeoClueInterface)
+		iface, d.obj.Path(), GeoclueInterface)
 	d.conn.BusObject().Call(dbusMethodAddMatch, 0, rule)
 }
 
@@ -373,8 +341,25 @@ func makeErrVariantType(iface string) error {
 	return fmt.Errorf("unexpected variant type for '%s'", iface)
 }
 
-func ip4ToString(ip uint32) string {
-	bs := []byte{0, 0, 0, 0}
-	binary.LittleEndian.PutUint32(bs, ip)
-	return net.IP(bs).String()
+func (d *dbusBase) parsePropertiesChanged(v *dbus.Signal) (interfaceName string, changedProperties map[string]dbus.Variant, invalidatedProperties []string, err error) {
+	if len(v.Body) != 3 {
+		err = errors.New("error by parsing property changed signal")
+		return
+	}
+	interfaceName, ok := v.Body[0].(string)
+	if !ok {
+		err = errors.New("error by parsing interface name")
+		return
+	}
+	changedProperties, ok = v.Body[1].(map[string]dbus.Variant)
+	if !ok {
+		err = errors.New("error by parsing changed properties map name")
+		return
+	}
+	invalidatedProperties, ok = v.Body[2].([]string)
+	if !ok {
+		err = errors.New("error by parsing invalidated properties")
+		return
+	}
+	return
 }
