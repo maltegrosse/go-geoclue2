@@ -72,12 +72,12 @@ func main() {
 	}
 	fmt.Println(longitude)
 
-/*	// get accuracy
-	accuracy, err := location.GetAccuracy()
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-	fmt.Println(accuracy)*/
+	/*	// get accuracy
+		accuracy, err := location.GetAccuracy()
+		if err != nil {
+			log.Fatal(err.Error())
+		}
+		fmt.Println(accuracy)*/
 
 	// listen location updates
 	c := client.SubscribeLocationUpdated()

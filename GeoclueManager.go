@@ -24,7 +24,7 @@ const (
 	GeoclueManagerPropertyAvailableAccuracyLevel = GeoclueManagerInterface + ".AvailableAccuracyLevel" //readable   u              // readable   ao
 )
 
-// This is the interface you use to talk to main GeoClue2 manager object at path "/org/freedesktop/GeoClue2/Manager".
+// GeoclueManager interface you use to talk to main GeoClue2 manager object at path "/org/freedesktop/GeoClue2/Manager".
 // The only thing you do with this interface is to call GetClient() or CreateClient() on it to get your application specific client object(s).
 type GeoclueManager interface {
 	/* METHODS */

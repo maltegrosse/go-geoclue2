@@ -29,9 +29,10 @@ const (
 	GeoclueClientSignalLocationUpdated = "LocationUpdated"
 )
 
-// This is the interface you use to retrieve location information and receive location update signals from GeoClue service.
+// GeoclueClient interface you use to retrieve location information and receive location update signals from GeoClue service.
 // You get the client object to use this interface on from org.freedesktop.GeoClue2.Manager.GetClient() method.
 type GeoclueClient interface {
+
 	/* METHODS */
 
 	// Start receiving events about the current location. Applications should hook-up to
