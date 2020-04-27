@@ -1,6 +1,6 @@
 package geoclue2
 
-// Used to specify level of accuracy requested by, or allowed for a client.
+// GClueAccuracyLevel is used to specify level of accuracy requested by, or allowed for a client.
 type GClueAccuracyLevel uint32
 
 //go:generate stringer -type=GClueAccuracyLevel -trimprefix=GClueAccuracyLevel

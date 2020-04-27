@@ -17,7 +17,7 @@ const (
 	GeoclueAgentPropertyMaxAccuracyLevel = GeoclueAgentInterface + ".MaxAccuracyLevel" // readable   u
 )
 
-// This is the interface all application-authorizing agents must implement. There must be a separate agent object for every logged-in user on path "/org/freedesktop/GeoClue2/Agent".
+// GeoclueAgent interface all application-authorizing agents must implement. There must be a separate agent object for every logged-in user on path "/org/freedesktop/GeoClue2/Agent".
 type GeoclueAgent interface {
 	/* METHODS */
 

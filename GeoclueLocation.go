@@ -31,7 +31,7 @@ const (
 	GeoclueLocationPropertyTimestamp = GeoclueLocationInterface + ".Timestamp" // readable   (tt)
 
 )
-
+// GeoclueLocation interface you use on location objects.
 type GeoclueLocation interface {
 	/* METHODS */
 	// The latitude of the location, in degrees.
