@@ -2,9 +2,9 @@ Go-Geoclue2
 ================
 
 [![GoDoc](https://godoc.org/github.com/maltegrosse/go-geoclue2?status.svg)](https://pkg.go.dev/github.com/maltegrosse/go-geoclue2)
+[![Go Report Card](https://goreportcard.com/badge/github.com/maltegrosse/go-geoclue2)](https://goreportcard.com/report/github.com/maltegrosse/go-geoclue2)
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
 ![Go](https://github.com/maltegrosse/go-geoclue2/workflows/Go/badge.svg) 
-[![Go Report Card](https://goreportcard.com/badge/github.com/maltegrosse/go-geoclue2)](https://goreportcard.com/report/github.com/maltegrosse/go-geoclue2)
 
 Go D-Bus bindings for Geoclue2
 
