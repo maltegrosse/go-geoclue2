@@ -81,7 +81,7 @@ type GeoclueClient interface {
 	MarshalJSON() ([]byte, error)
 
 	/* SIGNALS */
-	// todo
+
 	// LocationUpdated signal: The signal is emitted every time the location changes. The client should set the
 	// DistanceThreshold property to control how often this signal is emitted.
 	// o old: old location as path to a #org.freedesktop.Geoclue2.Location object
