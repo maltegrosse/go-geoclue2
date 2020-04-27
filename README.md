@@ -12,7 +12,6 @@ Tested with [Geoclue 2 - Version 2.5.6](https://gitlab.freedesktop.org/geoclue/g
 
 Additional information: [Geoclue2 D-Bus Specs](https://www.freedesktop.org/software/geoclue/docs/ref-dbus.html)
 
-
 ## Usage
 
 You can find some examples in the [examples](examples) directory.
