@@ -69,7 +69,7 @@ type GeoclueClient interface {
 
 	// The level of accuracy requested by client, as GClueAccuracyLevel.
 	// Please keep in mind that the actual accuracy of location information is dependent on available hardware on
-	// your machine, external resources and/or how much accuracy user agrees to be confortable with.
+	// your machine, external resources and/or how much accuracy user agrees to be comfortable with.
 	GetRequestedAccuracyLevel() (GClueAccuracyLevel, error)
 	SetRequestedAccuracyLevel(level GClueAccuracyLevel) error
 
@@ -122,8 +122,10 @@ func (gcc geoclueClient) Stop() error {
 
 func (gcc geoclueClient) GetLocation() (GeoclueLocation, error) {
 	var objPath dbus.ObjectPath
-
 	cActive, err := gcc.IsActive()
+	if err != nil {
+		return nil, err
+	}
 	if !cActive {
 		return nil, errors.New("client must be started before gathering the location")
 	}
